@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Blastaround Scooter Hub</title>
+    <title>SudoRadio</title>
     <link rel="stylesheet" href="/static/main.css">
 </head>
 
@@ -8,8 +8,13 @@
     <h3>SudoRadio Nao Playin</h3>
 	<p>
 	    <h2>{{ now_playing }}</h2>
-        <img src="{{ now_playing_art }}" alt="money">
-        <form method=POST >
+        <img src="static/{{ now_playing }}.jpg" alt="album_art">
+	<br></br>
+	<audio controls autoplay>
+	  <source src="static/{{ now_playing }}.mp3" type="audio/mpeg">forcetitle
+	</audio>
+	<br></br>
+	<form method="POST">
             <input type="text" name="song">
             <input type="submit" value="Request">
         </form> 

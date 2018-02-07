@@ -1,33 +1,39 @@
-import os
 from flask import Flask, request, render_template
-import time
-import datetime
-import vlc
-#import youtube_dl
+import youtube_dl
 
 app = Flask(__name__)
+ytdl_opts = {
+        'outtmpl': 'static/%(title)s.%(ext)s',
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+        }],
+        'writethumbnail' : "art"
+}
 
-# Create a dictionary of scooters:
+ytdl = youtube_dl.YoutubeDL(ytdl_opts)
 
-song = "/static/money.mp3"
-art = "/static/incentivized_mesh_color_no_alpha.png"
+song = "bonobo-kerala"
 
 @app.route('/')
 def main():
 	templateData = {
-		'now_playing' : song,
-		'now_playing_art' : art 
+		'now_playing' : song
 	}
 	return render_template('main.html', **templateData)
 
-# The function below is executed when someone requests a URL with the pin number and action in it:
 @app.route("/", methods=['POST'])
 def song_request():
-        song = request.form['text']
-        process = song.upper()
-	return process 
-
-
+        song = request.form['song']
+        info = ytdl.extract_info(song) # this also downloads the video
+        print info['webpage_url']
+        templateData = {
+                'now_playing' : info['title']
+        }
+        return render_template('main.html', **templateData)
+        
 if __name__ == '__main__':
 	app.run(debug=True, use_reloader=False, host='0.0.0.0')
 

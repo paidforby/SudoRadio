@@ -1,0 +1,9 @@
+click==6.7
+ffprobe==0.5
+Flask==0.12.2
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+python-vlc==3.0.101
+Werkzeug==0.14.1
+youtube-dl==2017.1.27
